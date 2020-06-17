@@ -11,4 +11,4 @@ Then run with:
   
 You can also change whether you want to use the camera/target.jpg by commenting or not commenting 
     
-    $ #define USE_IMAGE
+    #define USE_IMAGE
