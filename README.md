@@ -1,5 +1,5 @@
 # HSV-Color-Tester
-Simple OpenCV program that can be used to find upper and bottom bounds for the inRange function, on a image and from the camera.
+Simple OpenCV program that can be used to find upper and bottom bounds for the inRange function, on a image or from the camera.
 
 Make sure you have the OpenCV library. Then you can build with:
 
