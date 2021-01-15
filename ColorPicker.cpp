@@ -8,7 +8,7 @@
 
 //Defaults/Start value
 static const int H_MIN = 0;
-static const int H_MAX = 255;
+static const int H_MAX = 179;
 static const int S_MIN = 0; 
 static const int S_MAX = 255;
 static const int V_MIN = 0;
@@ -60,8 +60,8 @@ int main()
 	valMax = &intValMax;
 
 	//Create the trackbars that are used to get user input	
-	cv::createTrackbar("hueMin","Config window",hueMin,255,trackBar);
-	cv::createTrackbar("hueMax","Config window",hueMax,255,trackBar);
+	cv::createTrackbar("hueMin","Config window",hueMin,179,trackBar);
+	cv::createTrackbar("hueMax","Config window",hueMax,179,trackBar);
 	cv::createTrackbar("satMin","Config window",satMin,255,trackBar);
 	cv::createTrackbar("satMax","Config window",satMax,255,trackBar);
 	cv::createTrackbar("valMin","Config window",valMin,255,trackBar);
