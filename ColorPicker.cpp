@@ -83,6 +83,9 @@ int main()
 	//Read the image, we assume it's there
 	image = cv::imread("image.jpg");
 	cv::imshow("Orginal Image",image);
+	//Change the colorspace from Blue green red (camera) to hue saturation value
+	//Only needs to happen once, if image is static
+	cv::cvtColor(image,image,cv::COLOR_BGR2HSV);
 	#endif
 	
 	while(true){
@@ -107,9 +110,10 @@ int main()
 			PAST_V_Min = *valMin;
 			PAST_V_Max = *valMax;
 		#endif
-
+			#ifndef USE_IMAGE
 			//Change the colorspace from Blue green red (camera) to hue saturation value
 			cv::cvtColor(image,image,cv::COLOR_BGR2HSV);
+			#endif
 			//Run inRange on our image with the values given by the trackbar, and send the output to output
 			cv::inRange(image, cv::Scalar(*hueMin,*satMin,*valMin), cv::Scalar(*hueMax,*satMax,*valMax), output);
 
