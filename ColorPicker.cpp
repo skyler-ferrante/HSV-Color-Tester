@@ -3,6 +3,9 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
+//This is not very clean code.
+//I would like to clean it up at some point.
+
 //If defined the program will use target.jpg, if commented out it will use the camera
 #define USE_IMAGE
 
@@ -27,11 +30,14 @@ static int PAST_V_Max = V_MAX-1;
 //We have to give createTrackbar a callback function, but we don't actually need it
 void trackBar(int value, void*){}
 
+//Mouse callback function (prints BGR value of original image)
+void onMouse( int event, int x, int y, int, void*);
+
 int main()
 {
 	cv::namedWindow("Display window", cv::WINDOW_AUTOSIZE );// Create a window for display (transformed image)
 	cv::namedWindow("Config window", cv::WINDOW_NORMAL);// Create a window for configuration (Trackbars)
-	cv::namedWindow("Orginal Image",cv::WINDOW_AUTOSIZE ); // Create a window for orginal image
+	cv::namedWindow("Original window",cv::WINDOW_AUTOSIZE ); // Create a window for orginal image
 	
 	//We need a pointer to the H min/max, S min/max, and V min/max
 
@@ -82,10 +88,14 @@ int main()
 	#ifdef USE_IMAGE
 	//Read the image, we assume it's there
 	image = cv::imread("image.jpg");
-	cv::imshow("Orginal Image",image);
+	cv::imshow("Original window",image);
 	//Change the colorspace from Blue green red (camera) to hue saturation value
 	//Only needs to happen once, if image is static
 	cv::cvtColor(image,image,cv::COLOR_BGR2HSV);
+	//On mouse click print pixel values of image
+	//We could use this everywhere, but it would be slightly harder to do,
+	//and it's not useful to me.
+	cv::setMouseCallback("Original window", onMouse, &image);
 	#endif
 	
 	while(true){
@@ -123,5 +133,21 @@ int main()
 		#ifdef USE_IMAGE
 		}
 		#endif
+	}
+}
+
+void onMouse( int event, int x, int y, int, void* mat){
+	//Mouse clicks
+	if(event == 1){
+		//If mouse moves outside image, x or y could be -1
+		if(x < 0 || y < 0)
+			return;
+
+		cv::Mat image = *(cv::Mat*)(mat);
+		//Get BGR pixel from original image
+		cv::Vec3b pixel = image.at<cv::Vec3b>(x, y);
+		//Printf seemed cleaner for this
+		//Position : BGR value
+		printf("(%d, %d) : %d %d %d\n", x, y, pixel[0], pixel[1], pixel[2]);
 	}
 }
